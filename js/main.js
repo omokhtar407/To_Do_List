@@ -300,18 +300,4 @@ btnFinished.addEventListener('click',function(){
 });
 /****************************** End ToDoList  ******************************/
 
-/****************************** Start input ******************************/
-let input = document.querySelector('.input');
-let count = document.querySelector('.count');
-let prog = document.querySelector('.prog');
-let MaxLength = input.getAttribute("maxlength");
-
-count.innerHTML = MaxLength;
-input.addEventListener('input',function(){
-    count.innerHTML = MaxLength - this.value.length;
-    count.innerHTML == 0 ? count.classList.add('zero') : count.classList.remove('zero');
-    // progress
-    prog.style.width = `${(this.value.length * 100) / MaxLength}%`;
-})
-/****************************** End input ******************************/
 

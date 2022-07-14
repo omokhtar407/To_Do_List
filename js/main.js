@@ -1,3 +1,17 @@
+
+/* ******************* Start Loading ****************** */
+$(document).ready(function(){
+    $('.my-logo').fadeOut(2500, () => {
+        $('.my-logo').parent().fadeOut(3500 , () => {
+            $('.loading').remove();
+            $('body').css("overflow-y" , "auto");
+        })
+    });
+})
+/* ******************* End Loading ****************** */
+
+
+
 /****************************** Start ToDoList ******************************/
 /*
     Students Tasks:

@@ -1,3 +1,12 @@
+:root {
+  --main_color: #f15824;
+  --secondary_color:#f67f1d;
+  --white_color: #fff;
+  --black_color: #000;
+  --black_50_color:#0d0c0c;
+  --font_family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  --font_family_sec:'Kaushan Script', cursive;
+}
 body {
   font-family: "Trebuchet MS", "Lucida Sans Unicode", sans-serif;
   margin: 0;
@@ -6,6 +15,78 @@ body {
 i {
   cursor: pointer;
 }
+/********************** For Loading /***********************/
+.loading {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--black_color);
+  z-index: 999999999999999;
+  display: flex;  
+  justify-content: center;
+  align-items: center;
+}
+.my-logo{
+  position: relative;
+  width: 170px;
+  height: 170px;
+  background-color: var(--secondary_color);
+  border-radius: 50%;
+  overflow: hidden;
+  cursor: pointer;
+  margin: 0 auto;
+}
+
+.my-logo::before{
+  position: absolute;
+  content: "";
+  inset: -10px 70px;
+  background:linear-gradient(315deg , #fa003f,#ff1100);
+  transition: 0.5s ;
+  animation: animate 1s linear infinite;
+}
+.my-logo:hover::before{
+  inset: -20px 0px;
+}
+@keyframes animate {
+  0%{
+    transform: rotate(0deg);
+  }
+  100%{
+    transform: rotate(360deg);
+  }
+}
+.my-logo::after{
+  content: "";
+  position: absolute;
+  inset: 6px;
+  background: var(--black_color);
+  border-radius: 50%;
+  z-index: 1;
+}
+.my-logo .content{
+  position: absolute;
+  inset: 20px;
+  border: 6px solid var(--secondary_color);
+  z-index: 3;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.my-logo .content img{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  object-fit: cover;
+  transition: 0.5s;
+}
+
+/*********************** End For Loading ********************/
+
 /* ToDoList */
 .todo-container{
   padding: 1rem;

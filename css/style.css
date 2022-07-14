@@ -88,6 +88,12 @@ i {
 /*********************** End For Loading ********************/
 
 /* ToDoList */
+#ToDoList{
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .todo-container{
   padding: 1rem;
   background-color: #fff;

@@ -94,6 +94,11 @@ function noTasksMsg(){
 function createTask(taskInfo){
     // Create Main Span Element
     let mainSpan = document.createElement('span');
+    
+    let mainSpanIn = document.createElement('div');
+    mainSpanIn.className = 'task-in';
+    let mainSpanOut = document.createElement('span');
+    mainSpanOut.className = 'task-out';
 
     let inpCheckboxEle = document.createElement('input');
     let inpCheckboxEleType = document.createAttribute('type')
@@ -155,10 +160,34 @@ function createTask(taskInfo){
     div2.appendChild(editElement);
     
 
-    // Add checkbox, div1 and div2 To Main Span
-    mainSpan.appendChild(inpCheckboxEle);
-    mainSpan.appendChild(div1);
-    mainSpan.appendChild(div2);
+    // Add checkbox, div1 and div2 To task-in
+    mainSpanIn.appendChild(inpCheckboxEle);
+    mainSpanIn.appendChild(div1);
+    mainSpanIn.appendChild(div2);
+
+    // Create date and Time Spans
+    let dateElement = document.createElement('span');
+    let timeElement = document.createElement('span');
+
+    // Create The Date and Time Text
+    let dateText = document.createTextNode(`Date:- ${taskInfo.date}`);
+    let timeText = document.createTextNode(`Time:- ${taskInfo.time}`);
+
+    // Add Text To date and time spans
+    dateElement.appendChild(dateText);
+    timeElement.appendChild(timeText);
+
+    // Add Class To date and time spans
+    dateElement.className = 'date';
+    timeElement.className = 'time';
+
+    // Add date and time spans To task-out
+    mainSpanOut.appendChild(dateElement);
+    mainSpanOut.appendChild(timeElement);
+
+    // Add task-in and task-out to MainSpan
+    mainSpan.appendChild(mainSpanIn)
+    mainSpan.appendChild(mainSpanOut)
 
     // Add Class To Main Span
     mainSpan.className = `task`;
@@ -183,6 +212,7 @@ function addTaskToPage(data){
             createTask(task);
         }
     })
+
 }
 
 // Function Check If Tasks Exist
@@ -228,6 +258,10 @@ function CheckValue() {
 // Function To Display Tasks
 function displayTasks(){
     addTaskToPage(NewTasksContainer);
+    // Calc All Tasks
+    CalcTotalTasks();
+    // Calc Finished Tasks
+    CalcTotalFinishedTasks();
 }
 
 // Function Delete Task
@@ -243,7 +277,7 @@ document.addEventListener('click',function(e){
         let inpCheckbox = e.target;
         let inp = e.target.nextElementSibling.firstElementChild;
         NewTasksContainer.forEach((task)=>{
-            if(task.id == e.target.parentNode.getAttribute('task-id')){
+            if(task.id == e.target.parentNode.parentNode.getAttribute('task-id')){
                 if(inp.classList.contains('finished')){
                     // Remove Class Finished
                     inpCheckbox.removeAttribute('checked')
@@ -275,12 +309,12 @@ document.addEventListener('click',function(e){
     }
     // Edit Task
     else if(e.target.className == 'edit'){
-        let input = e.target.parentNode.parentNode.children[1].firstElementChild;
+        let input = e.target.parentNode.parentNode.parentNode.children[0].children[1].firstElementChild;
         input.removeAttribute('readonly');
         input.focus();
         input.onmouseleave = function(){
             NewTasksContainer.forEach((task)=>{ 
-                if(task.id == e.target.parentNode.parentNode.getAttribute('task-id')){
+                if(task.id == e.target.parentNode.parentNode.parentNode.getAttribute('task-id')){
                     task.content = input.value;
                 }
             })
@@ -290,8 +324,8 @@ document.addEventListener('click',function(e){
     }
     // Delete Task
     else if(e.target.className == 'delete'){
-        let taskID = e.target.parentNode.parentNode.getAttribute('task-id');
-        e.target.parentNode.parentNode.remove();
+        let taskID = e.target.parentNode.parentNode.parentNode.getAttribute('task-id');
+        e.target.parentNode.parentNode.parentNode.remove();
         deleteTask(taskID);
         Swal.fire({
             icon: 'success',
@@ -342,11 +376,11 @@ function CalcTotalFinishedTasks() {
 // Delete All Tasks
 btnDelete.addEventListener('click',function(){
     NewTasksContainer = []
-    displayTasks();
+    setToLocal()
     // Another Solution To Delete All Tasks But From Html Not LocalStorage 
     let Tasks = document.querySelectorAll('.tasks-content .task');
     Tasks.forEach((task) => task.parentNode.removeChild(task));
-    setToLocal()
+    displayTasks();
     Swal.fire({
         icon: 'success',
         title: 'You Deleted All Tasks!'
@@ -366,8 +400,9 @@ btnDelete.addEventListener('click',function(){
 btnFinished.addEventListener('click',function(){
     let Tasks = document.querySelectorAll('.tasks-content .task');
     Tasks.forEach(task => {
-        task.children[0].setAttribute('checked','')
-        task.children[1].firstElementChild.classList.add('finished');
+        console.log(task.firstElementChild)
+        task.firstElementChild.children[0].setAttribute('checked','')
+        task.firstElementChild.children[1].firstElementChild.classList.add('finished');
     });
     NewTasksContainer.forEach( task => {
         task.finished = true;

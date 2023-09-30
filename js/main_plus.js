@@ -2,7 +2,8 @@ let date = new Date();
 let day = date.toString().split(' ')[2]
 let month = date.toString().split(' ')[1]
 let year = date.toString().split(' ')[3]
-let time = date.toString().split(' ')[4]
+let timeArr = date.toString().split(' ')[4].split(':')
+let time = timeArr[0] + ":" + timeArr[1];
 let currDate = `${day}/${month}/${year}`
 
 /* ******************* Start Loading ****************** */
@@ -208,11 +209,10 @@ function createTask(taskInfo){
 // Function To Add Tasks to Page
 function addTaskToPage(data){
     data.forEach((task)=>{
-        if(task.content){
+        // if(task.content){
             createTask(task);
-        }
-    })
-
+        // }
+    });
 }
 
 // Function Check If Tasks Exist
@@ -270,7 +270,7 @@ function deleteTask(id){
     setToLocal()
 }
 
-// Delete and Finish Tasks
+// Finish, Edit, and Delete Tasks
 document.addEventListener('click',function(e){
     // Finish Task
     if(e.target.getAttribute('type') == 'checkbox'){
@@ -312,7 +312,7 @@ document.addEventListener('click',function(e){
         let input = e.target.parentNode.parentNode.parentNode.children[0].children[1].firstElementChild;
         input.removeAttribute('readonly');
         input.focus();
-        input.onmouseleave = function(){
+        input.onblur = function(){
             NewTasksContainer.forEach((task)=>{ 
                 if(task.id == e.target.parentNode.parentNode.parentNode.getAttribute('task-id')){
                     task.content = input.value;

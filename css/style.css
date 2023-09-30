@@ -143,10 +143,10 @@ input:focus {
   font-size: 15px;
 }
 /* Task */
-.task-in{
+.task-in {
   display: flex;
   justify-content: space-between;
-  align-items: center; 
+  align-items: center;
   background-color: #fff;
   padding: 10px;
 }
@@ -206,6 +206,8 @@ input[type="checkbox"]:checked:after {
   font-weight: bold;
   border-radius: 4px;
   cursor: pointer;
+  width: 60px;
+  text-align: center;
 }
 .task .tools span.edit {
   background-color: #e9c41e;
